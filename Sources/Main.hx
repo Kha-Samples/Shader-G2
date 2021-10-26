@@ -16,17 +16,17 @@ class Main {
 	static var x = 0.0;
 	static var pipeline: PipelineState;
 
-	static function render(framebuffer: Framebuffer): Void {
+	static function render(frames: Array<Framebuffer>): Void {
 		var g = backbuffer.g2;
 		g.begin(true, Color.Black);
 		g.color = Color.Red;
 		g.fillRect(x, 100, 500, 500);
 		g.end();
 
-		g = framebuffer.g2;
+		g = frames[0].g2;
 		g.begin();
 		g.pipeline = pipeline;
-		Scaler.scale(backbuffer, framebuffer, System.screenRotation);
+		Scaler.scale(backbuffer, frames[0], System.screenRotation);
 		g.end();
 	}
 
@@ -48,10 +48,10 @@ class Main {
 	}
 
 	public static function main() {
-		System.init({title: "Shader-G2", width: 1024, height: 768}, function () {
+		System.start({title: "Shader-G2", width: 1024, height: 768}, function(_) {
 			backbuffer = Image.createRenderTarget(1024, 768);
 			createPipeline();
-			System.notifyOnRender(render);
+			System.notifyOnFrames(render);
 			Scheduler.addTimeTask(update, 0, 1 / 60);
 		});
 	}
