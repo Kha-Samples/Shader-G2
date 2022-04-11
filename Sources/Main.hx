@@ -38,12 +38,12 @@ class Main {
 	static function createPipeline(): Void {
 		pipeline = new PipelineState();
 		var structure = new VertexStructure();
-		structure.add("vertexPosition", VertexData.Float3);
-		structure.add("vertexUV", VertexData.Float2);
-		structure.add("vertexColor", VertexData.Float4);
+		structure.add("vertexPosition", VertexData.Float32_3X);
+		structure.add("vertexUV", VertexData.Float32_2X);
+		structure.add("vertexColor", VertexData.UInt8_4X_Normalized);
 		pipeline.inputLayout = [structure];
 		pipeline.vertexShader = Shaders.painter_image_vert;
-		pipeline.fragmentShader = Shaders.postprocess_frag; // put in your own shader here
+		pipeline.fragmentShader = Shaders.postprocess_frag; // put your own shader here
 		pipeline.compile();
 	}
 
